@@ -4,6 +4,14 @@
 
 ---
 
+## Info
+
+- This library is built to help streamline both boilerplate or complicated code in Minecraft Fabric modding. The library is entirely written in Kotlin, which is the language I prefer writing mods in due to its simplicity and readability compared to Java. The main use case of these APIs will to support my writing of the Twilight Forest mod for the Fabric mod loader, however, other mod authors are welcome to make use of it in their own mods.
+
+You can check out my Twilight Forest mod [HERE](https://github.com/shinigami7x/TwilightForest).
+
+---
+
 ## Licensing
 
 - All code is released under the **GNU GPL v3.0** license [HERE](LICENSE).
