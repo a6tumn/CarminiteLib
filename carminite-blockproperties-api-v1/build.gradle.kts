@@ -17,10 +17,6 @@ dependencies {
     implementation(libs.fabricKotlin)
 }
 
-fabricApi {
-    // DATAGEN CONFIGURATION GOES HERE
-}
-
 loom {
     splitEnvironmentSourceSets()
 
@@ -41,7 +37,7 @@ tasks.processResources {
 }
 
 base {
-    archivesName.set(archives_base_name)
+    archivesName.set("carminite-blockproperties-api-v1")
 }
 
 java {
