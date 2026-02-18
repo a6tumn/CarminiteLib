@@ -1,3 +1,7 @@
+rootProject.name = "carminite"
+
+include("carminite-blockproperties-api-v1")
+
 pluginManagement {
     repositories {
         maven {
