@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "carminite",
+	"version": "${version}",
+	"name": "Carminite",
+	"description": "Library mod used to aid the development of the TwilightForest Fabric project. Is also suitable for use by other mod authors.",
+	"authors": [
+		"Autumn(shinigami7x@proton.me)"
+	],
+	"contact": {
+		"homepage": "https://github.com/shinigami7x",
+		"sources": "https://github.com/shinigami7x/Carminite"
+	},
+	"license": "GPL-2.0-only",
+	"icon": "assets/carminite/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			{
+				"value": "io.autumn.carminite.Carminite",
+				"adapter": "kotlin"
+			}
+		],
+		"client": [
+			{
+				"value": "io.autumn.carminite.CarminiteClient",
+				"adapter": "kotlin"
+			}
+		]
+	},
+	"mixins": [
+		"carminite.mixins.json",
+		{
+			"config": "carminite.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~26.1-",
+		"java": ">=25",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}
