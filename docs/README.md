@@ -1,5 +1,6 @@
 
-<img width="1964" height="219" alt="minecraft_title(1)" src="https://github.com/user-attachments/assets/088b93ba-d668-4173-a432-68dc8bb9b08e" />
+<img width="2048" height="345" alt="minecraft_title" src="https://github.com/user-attachments/assets/edc697eb-039c-46ba-8812-dc40078b748e" />
+
 
 ---
 
