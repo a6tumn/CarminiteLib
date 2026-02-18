@@ -6,7 +6,7 @@
 
 ## Licensing
 
-- All code is released under the **GNU GPL v2.1** license [HERE](../LICENSE).
+- All code is released under the **GNU GPL v3.0** license [HERE](../LICENSE).
 
 See the `LICENSE` file for full details.
 

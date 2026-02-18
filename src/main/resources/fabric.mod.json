@@ -11,7 +11,7 @@
 		"homepage": "https://github.com/shinigami7x",
 		"sources": "https://github.com/shinigami7x/Carminite"
 	},
-	"license": "GPL-2.0-only",
+	"license": "GPL-3.0-only",
 	"icon": "assets/carminite/icon.png",
 	"environment": "*",
 	"entrypoints": {
