@@ -4,10 +4,40 @@ plugins {
 }
 
 allprojects {
-    group = property("maven_group")!!
-    version = property("mod_version")!!
+    group = "io.autumn"
+    version = "1.0.0"
+
     repositories {
         mavenCentral()
         maven("https://maven.fabricmc.net/")
     }
 }
+
+subprojects {
+    plugins.withId("java") {
+        apply(plugin = "maven-publish")
+
+        extensions.configure<PublishingExtension> {
+            publications {
+                create<MavenPublication>("mavenJava") {
+                    from(components["java"])
+                    groupId = project.group.toString()
+                    artifactId = project.name
+                    version = project.version.toString()
+                }
+            }
+
+            repositories {
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/shinigami7x/Carminite")
+                    credentials {
+                        username = System.getenv("GITHUB_ACTOR")
+                        password = System.getenv("GITHUB_TOKEN")
+                    }
+                }
+            }
+        }
+    }
+}
+
