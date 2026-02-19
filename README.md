@@ -23,27 +23,44 @@ See the `LICENSE` file for full details.
 ## Current Version
 
 - *Minecraft* : `26.1-snapshot-9`
-- *Library* : `0.0.0`
+- *Library* : `1.0.0`
 
 ---
 
-## Features
+## 📦 Maven
 
+- If you want to include this library in your mod, add the following to your build script.
 
+### Kotlin DSL (build.gradle.kts)
+
+```kotlin
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/shinigami7x/Carminite")
+    }
+}
+
+dependencies {
+    implementation("io.autumn:carminite-blockproperties-api-v1:1.0.0")
+}
+```
 
 ---
 
-## 📦 Downloads
+### Groovy DSL (build.gradle)
 
-Once version **1.0.0** becomes available, builds will be published on:
+```groovy
+repositories {
+  maven {
+    url "https://maven.pkg.github.com/shinigami7x/Carminite"
+  }
+}
 
-- [Modrinth](https://modrinth.com/)
+dependencies {
+  implementation "io.autumn:carminite-blockproperties-api-v1:1.0.0"
+}
+```
 
-Until then:
-- Testing builds may be released via GitHub.
-- The project can be built manually from source.
-
----
 
 ## 📫 Contact Info
 
