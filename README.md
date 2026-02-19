@@ -8,13 +8,12 @@
 
 - This library is built to help streamline both boilerplate and complicated code in Minecraft Fabric modding. The library is entirely written in Kotlin, which is the language I prefer writing mods in due to its simplicity and readability compared to Java. The main use case of these APIs will be to support my writing of the Twilight Forest mod for the Fabric mod loader, however, other mod authors are welcome to make use of it in their own mods.
 
-You can check out my Twilight Forest mod [HERE](https://github.com/shinigami7x/TwilightForest).
-
 ---
 
 ## Licensing
 
 - All code is released under the **GNU GPL v3.0** license [HERE](LICENSE).
+- Icon is licensed under **CC BY-NC-SA 4.0 International**
 
 See the `LICENSE` file for full details.
 
@@ -35,7 +34,7 @@ See the `LICENSE` file for full details.
 
 - If you want to include this library in your mod, add the following to your build script.
 
-### Kotlin DSL (build.gradle.kts)
+### Kotlin DSL
 
 ```kotlin
 repositories {
@@ -51,7 +50,7 @@ dependencies {
 
 ---
 
-### Groovy DSL (build.gradle)
+### Groovy DSL
 
 ```groovy
 repositories {
@@ -65,6 +64,7 @@ dependencies {
 }
 ```
 
+---
 
 ## 📫 Contact Info
 
@@ -72,3 +72,15 @@ dependencies {
 - Discord: `chronictsuki`  
   *(Discord may not be checked frequently.)*
 
+---
+
+## Acknowledgements
+
+Credit for the icon asset goes to:
+
+- [TeamTwilight](https://github.com/TeamTwilight)
+- [Benimatic](https://github.com/Benimatic)
+
+Be sure to check out their project.
+
+---
