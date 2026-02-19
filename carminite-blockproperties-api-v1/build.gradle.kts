@@ -2,8 +2,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.gradle.jvm.tasks.Jar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val archives_base_name: String by project
-
 plugins {
     id("net.fabricmc.fabric-loom")
     id("org.jetbrains.kotlin.jvm")
@@ -18,12 +16,9 @@ dependencies {
 }
 
 loom {
-    splitEnvironmentSourceSets()
-
     mods {
         create("carminite-blockproperties-api-v1") {
             sourceSet(sourceSets.main.get())
-            sourceSet(sourceSets["client"])
         }
     }
 }
@@ -55,11 +50,11 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 tasks.named<Jar>("jar") {
-    inputs.property("archivesName", archives_base_name)
+    inputs.property("archivesName", "carminite-blockproperties-api-v1")
 
     from("LICENSE") {
         rename { fileName ->
-            "${fileName}_${archives_base_name}"
+            "${fileName}_${"carminite-blockproperties-api-v1"}"
         }
     }
 }
@@ -67,7 +62,7 @@ tasks.named<Jar>("jar") {
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            artifactId = archives_base_name
+            artifactId = "carminite-blockproperties-api-v1"
             from(components["java"])
         }
     }
