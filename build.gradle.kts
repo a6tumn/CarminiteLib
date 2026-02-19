@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "io.autumn"
-    version = "1.0.0"
+    version = "1.0.1"
 
     repositories {
         mavenCentral()
@@ -24,6 +24,11 @@ subprojects {
                     groupId = project.group.toString()
                     artifactId = project.name
                     version = project.version.toString()
+
+                    pom {
+                        name.set("V${project.version}")
+                        description.set("Carminite BlockProperties API v1")
+                    }
                 }
             }
 
