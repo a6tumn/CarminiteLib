@@ -1,6 +1,7 @@
 rootProject.name = "carminite"
 
 include("carminite-blockproperties-api-v1")
+include("carminite-registry-api-v1")
 
 pluginManagement {
     repositories {

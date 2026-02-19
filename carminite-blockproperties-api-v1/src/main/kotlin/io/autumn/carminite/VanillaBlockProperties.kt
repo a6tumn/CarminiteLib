@@ -9,7 +9,7 @@ import net.minecraft.world.level.material.MapColor
 import net.minecraft.world.level.material.PushReaction
 
 /**
- * Collection of helper factory methods for creating vanilla-like
+ * Collection of helper methods for creating vanilla-like
  * [BlockBehaviour.Properties] configurations.
  *
  * These functions mirror common property combinations used by vanilla
@@ -213,24 +213,4 @@ object VanillaBlockProperties {
             .noCollision()
             .strength(1.0f)
             .ignitedByLava()
-
-    /**
-     * Creates standard wall sign block properties.
-     *
-     * Intended for generic wall sign blocks.
-     *
-     * @param standingBlock The associated standing sign block (defaults to [Blocks.OAK_SIGN]).
-     */
-    fun wallSignProperties(
-        standingBlock: Block = Blocks.OAK_SIGN
-    ): BlockBehaviour.Properties =
-        BlockBehaviour.Properties.of()
-            .mapColor(standingBlock.defaultMapColor())
-            .forceSolidOn()
-            .instrument(NoteBlockInstrument.BASS)
-            .noCollision()
-            .strength(1.0f)
-            .ignitedByLava()
-            .overrideLootTable(standingBlock.lootTable)
-            .overrideDescription(standingBlock.descriptionId)
 }

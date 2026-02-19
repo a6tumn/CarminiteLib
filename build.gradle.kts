@@ -5,7 +5,7 @@ plugins {
 
 allprojects {
     group = "io.autumn"
-    version = "1.0.2"
+    version = "1.1.0"
 
     repositories {
         mavenCentral()
@@ -24,15 +24,12 @@ subprojects {
                     groupId = project.group.toString()
                     artifactId = project.name
                     version = project.version.toString()
-
-                    pom {
-                        name.set("V${project.version}")
-                        description.set("Carminite BlockProperties API v1")
-                    }
                 }
             }
 
             repositories {
+                mavenLocal()
+
                 maven {
                     name = "GitHubPackages"
                     url = uri("https://maven.pkg.github.com/shinigami7x/Carminite")

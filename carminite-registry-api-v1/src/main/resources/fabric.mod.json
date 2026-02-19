@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "carminite-blockproperties-api-v1",
+  "id": "carminite-registry-api-v1",
   "version": "${version}",
   "name": "Carminite",
   "description": "Minecraft library mod not intended to be installed by end users.",
