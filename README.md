@@ -23,7 +23,7 @@ See the `LICENSE` file for full details.
 ## Current Version
 
 - *Minecraft* : `26.1-snapshot-9`
-- *Library* : `1.0.0`
+- *Library* : `1.0.1`
 
 ---
 
@@ -41,7 +41,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.autumn:carminite-blockproperties-api-v1:1.0.0")
+    implementation("io.autumn:carminite-blockproperties-api-v1:1.0.1")
 }
 ```
 
@@ -57,7 +57,7 @@ repositories {
 }
 
 dependencies {
-  implementation "io.autumn:carminite-blockproperties-api-v1:1.0.0"
+  implementation "io.autumn:carminite-blockproperties-api-v1:1.0.1"
 }
 ```
 
