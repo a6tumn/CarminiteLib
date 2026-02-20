@@ -4,8 +4,8 @@ dependencies {
     implementation(libs.fabricApi)
     implementation(libs.fabricKotlin)
 
-    implementation(project(":carminite-blockproperties-api-v1"))
-    implementation(project(":carminite-registry-api-v1"))
+    compileOnly(project(":carminite-blockproperties-api-v1"))
+    compileOnly(project(":carminite-registry-api-v1"))
 }
 
 base {
@@ -23,5 +23,18 @@ tasks.processResources {
 
     filesMatching("fabric.mod.json") {
         expand("version" to project.version)
+    }
+}
+
+tasks.jar {
+    from(sourceSets.main.get().output)
+
+    from(project(":carminite-blockproperties-api-v1").sourceSets.main.get().output) {
+        exclude("fabric.mod.json")
+        exclude("icon.png")
+    }
+    from(project(":carminite-registry-api-v1").sourceSets.main.get().output) {
+        exclude("fabric.mod.json")
+        exclude("icon.png")
     }
 }
