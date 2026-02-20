@@ -19,6 +19,24 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.properties.WoodType
 
+/**
+ * Collection of helper methods for streamlining sign block and item registration while
+ * using and copying some logic from vanilla systems.
+ *
+ * These functions chain registrations to streamline registration for mods with lots of
+ * repeating registration patterns. Defaults parameter values are not provided in most
+ * cases as the arguments will need meaningfulvalues for production code.
+ **/
+
+/**
+ * Registers a sign block, wall sign block, and sign item.
+ *
+ * Intended for sign blocks.
+ *
+ * @param namespaceAndPath An identifier containing your project namepsace and the name of the wood type(no default set).
+ * @param woodType The wood type that the sign belongs to (no default set).
+ * @param settings The settings which you want your blocks to be registered with (no default set).
+ **/
 fun registerSign(
     namespaceAndPath: Identifier,
     woodType: WoodType,
@@ -41,6 +59,15 @@ fun registerSign(
     return SignSet(standing, wall, signItem)
 }
 
+/**
+ * Registers a hanging sign block, wall hanging sign block, and hanging sign item.
+ *
+ * Intended for hanging sign blocks.
+ *
+ * @param namespaceAndPath An identifier containing your project namepsace and the name of the wood type(no default set).
+ * @param woodType The wood type that the hanging sign belongs to (no default set).
+ * @param settings The settings which you want your blocks to be registered with (no default set).
+ **/
 fun registerHangingSign(
     namespaceAndPath: Identifier,
     woodType: WoodType,
