@@ -1,21 +1,15 @@
-
 dependencies {
     minecraft(libs.minecraft)
     implementation(libs.fabricLoader)
     implementation(libs.fabricApi)
     implementation(libs.fabricKotlin)
-}
 
-loom {
-    mods {
-        create("carminite-registry-api-v1") {
-            sourceSet(sourceSets.main.get())
-        }
-    }
+    implementation(project(":carminite-blockproperties-api-v1"))
+    implementation(project(":carminite-registry-api-v1"))
 }
 
 base {
-    archivesName.set("carminite-registry-api-v1")
+    archivesName.set("carminite-api")
 }
 
 java {

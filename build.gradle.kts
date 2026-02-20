@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT" apply false
     id("org.jetbrains.kotlin.jvm") version "2.3.10" apply false
@@ -14,6 +17,9 @@ allprojects {
 }
 
 subprojects {
+    pluginManager.apply("org.jetbrains.kotlin.jvm")
+    pluginManager.apply("net.fabricmc.fabric-loom")
+
     plugins.withId("java") {
         apply(plugin = "maven-publish")
 
@@ -40,6 +46,13 @@ subprojects {
                 }
             }
         }
+
+        tasks.withType<JavaCompile>().configureEach {
+            options.release.set(25)
+        }
+
+        tasks.withType<KotlinCompile>().configureEach {
+            compilerOptions.jvmTarget.set(JvmTarget.JVM_25)
+        }
     }
 }
-

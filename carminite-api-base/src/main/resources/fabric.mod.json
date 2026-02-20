@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "carminite",
+  "version": "${version}",
+  "name": "Carminite",
+  "description": "Minecraft library mod not intended to be installed by end users.",
+  "authors": [
+    "Autumn(shinigami7x@proton.me)"
+  ],
+  "contact": {
+    "homepage": "https://github.com/shinigami7x",
+    "sources": "https://github.com/shinigami7x/Carminite"
+  },
+  "license": ["GPL-3.0-only"],
+  "icon": "icon.png",
+  "environment": "*",
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~26.1-",
+    "java": ">=25",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*"
+  }
+}
