@@ -1,3 +1,4 @@
+@file:Suppress("unused")
 package io.autumn.carminite.api.registry
 
 import net.minecraft.core.Registry

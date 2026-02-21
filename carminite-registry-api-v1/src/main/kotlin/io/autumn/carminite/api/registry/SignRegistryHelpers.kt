@@ -1,7 +1,8 @@
+@file:Suppress("unused")
 package io.autumn.carminite.api.registry
 
-import io.autumn.carminite.api.registry.data.HangingSignSet
-import io.autumn.carminite.api.registry.data.SignSet
+import io.autumn.carminite.api.registry.types.HangingSignSet
+import io.autumn.carminite.api.registry.types.SignSet
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
