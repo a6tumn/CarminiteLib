@@ -1,4 +1,4 @@
-package io.autumn.carminite.resource_keys
+package io.autumn.carminite.api.registry
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier

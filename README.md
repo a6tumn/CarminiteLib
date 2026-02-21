@@ -22,7 +22,7 @@ See the `LICENSE` file for full details.
 ## Current Version
 
 - *Minecraft* : `26.1-snapshot-9`
-- *Library* : `1.1.0`
+- *Library* : `1.2.0`
 ####
 - Major versions such as 1.X.X will include breaking changes
 - Intermediate versions such as X.1.X will include new features

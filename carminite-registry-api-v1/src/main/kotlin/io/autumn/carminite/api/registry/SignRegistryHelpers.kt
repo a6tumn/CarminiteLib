@@ -1,8 +1,7 @@
-package io.autumn.carminite.sign
+package io.autumn.carminite.api.registry
 
-import io.autumn.carminite.block.*
-import io.autumn.carminite.sign.data.HangingSignSet
-import io.autumn.carminite.sign.data.SignSet
+import io.autumn.carminite.api.registry.data.HangingSignSet
+import io.autumn.carminite.api.registry.data.SignSet
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -42,8 +41,18 @@ fun registerSign(
     woodType: WoodType,
     settings: BlockBehaviour.Properties
 ): SignSet {
-    val standing = registerGenericBlock(namespaceAndPath.withSuffix("_sign"), { p -> StandingSignBlock(woodType, p) }, settings, false)
-    val wall = registerGenericBlock(namespaceAndPath.withSuffix("_wall_sign"), { p -> WallSignBlock(woodType, p) }, settings.overrideLootTable(standing.lootTable).overrideDescription(standing.descriptionId), false)
+    val standing = registerGenericBlock(
+        namespaceAndPath.withSuffix("_sign"),
+        { p -> StandingSignBlock(woodType, p) },
+        settings,
+        false
+    )
+    val wall = registerGenericBlock(
+        namespaceAndPath.withSuffix("_wall_sign"),
+        { p -> WallSignBlock(woodType, p) },
+        settings.overrideLootTable(standing.lootTable).overrideDescription(standing.descriptionId),
+        false
+    )
 
     val itemKey = ResourceKey.create(Registries.ITEM, namespaceAndPath.withSuffix("_sign"))
     val properties = Item.Properties()
@@ -73,8 +82,18 @@ fun registerHangingSign(
     woodType: WoodType,
     settings: BlockBehaviour.Properties
 ): HangingSignSet {
-    val hanging = registerGenericBlock(namespaceAndPath.withSuffix("_hanging_sign"), { p -> CeilingHangingSignBlock(woodType, p) }, settings, false)
-    val wallHanging = registerGenericBlock(namespaceAndPath.withSuffix("_wall_hanging_sign"), { p -> WallHangingSignBlock(woodType, p) }, settings.overrideLootTable(hanging.lootTable).overrideDescription(hanging.descriptionId), false)
+    val hanging = registerGenericBlock(
+        namespaceAndPath.withSuffix("_hanging_sign"),
+        { p -> CeilingHangingSignBlock(woodType, p) },
+        settings,
+        false
+    )
+    val wallHanging = registerGenericBlock(
+        namespaceAndPath.withSuffix("_wall_hanging_sign"),
+        { p -> WallHangingSignBlock(woodType, p) },
+        settings.overrideLootTable(hanging.lootTable).overrideDescription(hanging.descriptionId),
+        false
+    )
 
     val itemKey = ResourceKey.create(Registries.ITEM, namespaceAndPath.withSuffix("_hanging_sign"))
     val properties = Item.Properties()

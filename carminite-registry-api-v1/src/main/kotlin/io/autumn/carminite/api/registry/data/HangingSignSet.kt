@@ -1,4 +1,4 @@
-package io.autumn.carminite.sign.data
+package io.autumn.carminite.api.registry.data
 
 import net.minecraft.world.item.HangingSignItem
 import net.minecraft.world.level.block.Block

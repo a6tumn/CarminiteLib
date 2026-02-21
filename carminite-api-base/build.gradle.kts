@@ -32,9 +32,11 @@ tasks.jar {
     from(project(":carminite-blockproperties-api-v1").sourceSets.main.get().output) {
         exclude("fabric.mod.json")
         exclude("icon.png")
+        //into("blockproperties-api-v1")
     }
     from(project(":carminite-registry-api-v1").sourceSets.main.get().output) {
         exclude("fabric.mod.json")
         exclude("icon.png")
+        //into("registry-api-v1")
     }
 }

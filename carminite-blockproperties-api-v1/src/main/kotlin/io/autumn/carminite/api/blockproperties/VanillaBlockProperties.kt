@@ -1,4 +1,4 @@
-package io.autumn.carminite
+package io.autumn.carminite.api.blockproperties
 
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
