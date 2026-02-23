@@ -8,7 +8,7 @@ plugins {
 
 allprojects {
     group = "io.autumn"
-    version = "1.2.0"
+    version = "1.3.0"
 
     repositories {
         mavenCentral()
@@ -35,15 +35,6 @@ subprojects {
 
             repositories {
                 mavenLocal()
-
-                maven {
-                    name = "GitHubPackages"
-                    url = uri("https://maven.pkg.github.com/shinigami7x/Carminite")
-                    credentials {
-                        username = System.getenv("GITHUB_ACTOR")
-                        password = System.getenv("GITHUB_TOKEN")
-                    }
-                }
             }
         }
 

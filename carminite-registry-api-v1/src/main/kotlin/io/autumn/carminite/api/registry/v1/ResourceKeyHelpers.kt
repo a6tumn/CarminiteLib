@@ -1,5 +1,6 @@
 @file:Suppress("unused")
-package io.autumn.carminite.api.registry
+
+package io.autumn.carminite.api.registry.v1
 
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier

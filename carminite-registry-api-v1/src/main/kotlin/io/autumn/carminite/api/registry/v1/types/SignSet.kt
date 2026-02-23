@@ -1,10 +1,10 @@
-package io.autumn.carminite.api.registry.types
+package io.autumn.carminite.api.registry.v1.types
 
 import net.minecraft.world.item.SignItem
 import net.minecraft.world.level.block.Block
 
 /**
- * Data structure containg a sign block, its wall block, ahnd its item. Useful for
+ * Data structure containg a sign block, its wall block, and its item. Useful for
  * other functions in this library which streamline sign registration.
  *
  * Members can be referenced using dot notation

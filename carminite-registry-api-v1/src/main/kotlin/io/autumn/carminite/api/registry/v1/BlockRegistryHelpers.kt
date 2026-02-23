@@ -1,12 +1,17 @@
 @file:Suppress("unused")
-package io.autumn.carminite.api.registry
 
+package io.autumn.carminite.api.registry.v1
+
+import io.autumn.carminite.api.registry.v1.types.LogSet
+import io.autumn.carminite.api.registry.v1.types.WoodSet
+import net.fabricmc.fabric.api.registry.StrippableBlockRegistry
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 
@@ -19,6 +24,70 @@ import net.minecraft.world.level.block.state.BlockBehaviour
  * patterns. Defaults parameter values are not provided in most cases as the
  * arguments will need meaningfulvalues for production code.
  **/
+
+/**
+ * Registers a standard log pair.
+ *
+ * Intended for generic log blocks.
+ *
+ * @param namespaceAndPath An identifier containing your project namepsace and the name of the block (no default set).
+ * @param logSettings The settings which you want your log block to be registered with (no default set).
+ * @param strippedLogSettings The settings which you want your stripped log block to be registered with (no default set).
+ **/
+fun registerLogPair(
+    namespaceAndPath: Identifier,
+    logSettings: BlockBehaviour.Properties,
+    strippedLogSettings: BlockBehaviour.Properties
+) : LogSet {
+    val normal = registerGenericBlock(
+        namespaceAndPath,
+        ::RotatedPillarBlock,
+        logSettings,
+        true
+    )
+    val stripped = registerGenericBlock(
+        namespaceAndPath.withPrefix("stripped_"),
+        ::RotatedPillarBlock,
+        strippedLogSettings,
+        true
+    )
+
+    StrippableBlockRegistry.register(normal, stripped)
+
+    return LogSet(normal, stripped)
+}
+
+/**
+ * Registers a standard wood pair.
+ *
+ * Intended for generic wood blocks.
+ *
+ * @param namespaceAndPath An identifier containing your project namepsace and the name of the block (no default set).
+ * @param woodSettings The settings which you want your wood block to be registered with (no default set).
+ * @param strippedWoodSettings The settings which you want your stripped wood block to be registered with (no default set).
+ **/
+fun registerWoodPair(
+    namespaceAndPath: Identifier,
+    woodSettings: BlockBehaviour.Properties,
+    strippedWoodSettings: BlockBehaviour.Properties
+) : WoodSet {
+    val normal = registerGenericBlock(
+        namespaceAndPath,
+        ::RotatedPillarBlock,
+        woodSettings,
+        true
+    )
+    val stripped = registerGenericBlock(
+        namespaceAndPath.withPrefix("stripped_"),
+        ::RotatedPillarBlock,
+        strippedWoodSettings,
+        true
+    )
+
+    StrippableBlockRegistry.register(normal, stripped)
+
+    return WoodSet(normal, stripped)
+}
 
 /**
  * Registers a standard stair block(not the deprecated legacy stair).
