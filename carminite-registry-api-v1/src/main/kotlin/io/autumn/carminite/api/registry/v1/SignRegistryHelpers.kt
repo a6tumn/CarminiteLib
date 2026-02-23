@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.properties.WoodType
  *
  * These functions chain registrations to streamline registration for mods with lots of
  * repeating registration patterns. Defaults parameter values are not provided in most
- * cases as the arguments will need meaningfulvalues for production code.
+ * cases as the arguments will need meaningful values for production code.
  **/
 
 /**

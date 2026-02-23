@@ -8,7 +8,7 @@ plugins {
 
 allprojects {
     group = "io.autumn"
-    version = "1.3.0"
+    version = "1.5.0"
 
     repositories {
         mavenCentral()

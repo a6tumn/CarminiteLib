@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Block
  *
  * These functions mirror vanilla behavior. Defaults parameter
  * values are not provided in most cases as the arguments will
- * need meaningfulvalues for production code.
+ * need meaningful values for production code.
  **/
 
 /**

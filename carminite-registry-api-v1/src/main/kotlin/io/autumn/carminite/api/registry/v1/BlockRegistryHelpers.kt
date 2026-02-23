@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour
  * Some of these functions mirror private vanilla implementations while others
  * simply streamline registration for mods with lots of repeating registration
  * patterns. Defaults parameter values are not provided in most cases as the
- * arguments will need meaningfulvalues for production code.
+ * arguments will need meaningful values for production code.
  **/
 
 /**
