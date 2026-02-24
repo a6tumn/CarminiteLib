@@ -1,7 +1,6 @@
 @file:Suppress("unused")
 
 package io.autumn.carminite.api.featureutil.v1
-
 import net.minecraft.core.BlockPos
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.WorldGenLevel
@@ -217,5 +216,99 @@ fun placeSpheroid(
                 }
             }
         }
+    }
+}
+
+/**
+ * Traces and places root blocks along a given position path.
+ *
+ * Intended to be used on a given block and position within the world.
+ *
+ * @param level The world in which to place the blocks (no default set).
+ * @param rootPlacer The [RootPlacer] responsible for placing root blocks (no default set).
+ * @param random Random source for block variation (no default set).
+ * @param dirtRoot The block state provider for the root blocks (no default set).
+ * @param posTracer Iterable of positions used to trace root placement (no default set).
+ **/
+fun traceRoot(
+    level: WorldGenLevel,
+    rootPlacer: RootPlacer,
+    random: RandomSource,
+    dirtRoot: BlockStateProvider,
+    posTracer: Iterable<BlockPos>
+) {
+    for (rootPos in posTracer) {
+        if (anyBelowMatch(rootPos, rootPlacer.rootPenetrability - 1) { blockPos ->
+                level.isStateAtPosition(blockPos, ROOT_SHOULD_SKIP)
+            }) return
+
+        if (!placeIfValidRootPos(level, rootPlacer, random, rootPos, dirtRoot)) return
+    }
+}
+
+/**
+ * Traces and places exposed root blocks along a given position path.
+ *
+ * Intended to be used on a given block and position within the world.
+ *
+ * @param level The world in which to place the blocks (no default set).
+ * @param rootPlacer The [RootPlacer] responsible for placing root blocks (no default set).
+ * @param random Random source for block variation (no default set).
+ * @param exposedRoot The block state provider for the exposed root blocks (no default set).
+ * @param dirtRoot The block state provider for the root blocks (no default set).
+ * @param posTracer Iterable of positions used to trace root placement (no default set).
+ **/
+fun traceExposedRoot(
+    level: WorldGenLevel,
+    rootPlacer: RootPlacer,
+    random: RandomSource,
+    exposedRoot: BlockStateProvider,
+    dirtRoot: BlockStateProvider,
+    posTracer: Iterable<BlockPos>
+) {
+    for (exposedPos in posTracer) {
+        if (level.isStateAtPosition(exposedPos, ROOT_SHOULD_SKIP)) continue
+
+        if (hasEmptyNeighborExceptBelow(level, exposedPos)) {
+            if (anyBelowMatch(exposedPos, rootPlacer.rootPenetrability - 1) { blockPos ->
+                    !worldGenReplaceable(level.getBlockState(blockPos)) &&
+                            level.getBlockState(blockPos) != exposedRoot.getState(random, exposedPos)
+                }) return
+
+            rootPlacer.placer.accept(exposedPos, exposedRoot.getState(random, exposedPos))
+        } else {
+            if (placeIfValidRootPos(level, rootPlacer, random, exposedPos, dirtRoot)) {
+                traceRoot(level, rootPlacer, random, dirtRoot, posTracer)
+            }
+            return
+        }
+    }
+}
+
+/**
+ * Places a root block at a given position in the world if the position is valid.
+ *
+ * Intended to be used on a given block and position within the world.
+ *
+ * @param level The world in which to place the blocks (no default set).
+ * @param rootPlacer The [RootPlacer] responsible for placing root blocks (no default set).
+ * @param random Random source for block variation (no default set).
+ * @param pos The position to attempt to place the block (no default set).
+ * @param config The [BlockStateProvider] providing the block state to place (no default set).
+ **/
+fun placeIfValidRootPos(
+    level: WorldGenLevel,
+    rootPlacer: RootPlacer,
+    random: RandomSource,
+    pos: BlockPos,
+    config: BlockStateProvider
+): Boolean {
+    return if (!anyBelowMatch(pos, rootPlacer.rootPenetrability - 1) { blockPos ->
+            !canRootGrowIn(level, blockPos)
+        }) {
+        rootPlacer.placer.accept(pos, config.getState(random, pos))
+        true
+    } else {
+        false
     }
 }
