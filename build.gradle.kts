@@ -1,49 +1,79 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val mod_version: String by project
+val maven_group: String by project
+val archives_base_name: String by project
+
 plugins {
-    id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT" apply false
-    id("org.jetbrains.kotlin.jvm") version "2.3.10" apply false
+    id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT"
+    id("maven-publish")
+    id("org.jetbrains.kotlin.jvm") version "2.3.10"
 }
 
-allprojects {
-    group = "io.autumn"
-    version = "1.5.1"
+group = project.property("maven_group") as String
+version = project.property("mod_version") as String
 
-    repositories {
-        mavenCentral()
-        maven("https://maven.fabricmc.net/")
+dependencies {
+    minecraft(libs.minecraft)
+    implementation(libs.fabricLoader)
+    implementation(libs.fabricApi)
+    implementation(libs.fabricKotlin)
+}
+
+fabricApi {
+    configureDataGeneration {
+        client = true
     }
 }
 
-subprojects {
-    pluginManager.apply("org.jetbrains.kotlin.jvm")
-    pluginManager.apply("net.fabricmc.fabric-loom")
-
-    plugins.withId("java") {
-        apply(plugin = "maven-publish")
-
-        extensions.configure<PublishingExtension> {
-            publications {
-                create<MavenPublication>("mavenJava") {
-                    from(components["java"])
-                    groupId = project.group.toString()
-                    artifactId = project.name
-                    version = project.version.toString()
-                }
-            }
-
-            repositories {
-                mavenLocal()
-            }
+loom {
+    mods {
+        create("carminite-lib") {
+            sourceSet(sourceSets.main.get())
         }
+    }
+}
 
-        tasks.withType<JavaCompile>().configureEach {
-            options.release.set(25)
-        }
+tasks.processResources {
+    inputs.property("version", project.version)
 
-        tasks.withType<KotlinCompile>().configureEach {
-            compilerOptions.jvmTarget.set(JvmTarget.JVM_25)
+    filesMatching("fabric.mod.json") {
+        expand("version" to project.version)
+    }
+}
+
+
+base {
+    archivesName.set(archives_base_name)
+}
+
+java {
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(25)
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_25)
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = archives_base_name
+            from(components["java"])
         }
+    }
+
+    repositories {
+        mavenLocal()
     }
 }
