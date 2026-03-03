@@ -46,7 +46,7 @@ fun placeProvidedBlock(
     random: RandomSource
 ) {
     if (predicate(level, pos)) {
-        worldPlacer.accept(pos, config.getState(random, pos))
+        worldPlacer.accept(pos, config.getState(level, random, pos))
     }
 }
 
@@ -71,7 +71,7 @@ fun placeLeaf(
     random: RandomSource
 ) {
     if (predicate(level, pos)) {
-        foliageSetter.set(pos, config.getState(random, pos))
+        foliageSetter.set(pos, config.getState(level, random, pos))
     }
 }
 
@@ -193,27 +193,27 @@ fun placeSpheroid(
                             ((x * x + (z + 1) * (z + 1)) * yRadiusSquared > superRadiusSquared)
 
                     if (edgeCheck) {
-                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(x, y, z), config.getState(random, centerPos.offset(x, y, z)))
-                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(-x, y, -z), config.getState(random, centerPos.offset(-x, y, -z)))
-                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(-z, y, x), config.getState(random, centerPos.offset(-z, y, x)))
-                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(z, y, -x), config.getState(random, centerPos.offset(z, y, -x)))
+                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(x, y, z), config.getState(level, random, centerPos.offset(x, y, z)))
+                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(-x, y, -z), config.getState(level, random, centerPos.offset(-x, y, -z)))
+                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(-z, y, x), config.getState(level, random, centerPos.offset(-z, y, x)))
+                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(z, y, -x), config.getState(level, random, centerPos.offset(z, y, -x)))
 
-                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(x, -y, z), config.getState(random, centerPos.offset(x, -y, z)))
-                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(-x, -y, -z), config.getState(random, centerPos.offset(-x, -y, -z)))
-                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(-z, -y, x), config.getState(random, centerPos.offset(-z, -y, x)))
-                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(z, -y, -x), config.getState(random, centerPos.offset(z, -y, -x)))
+                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(x, -y, z), config.getState(level, random, centerPos.offset(x, -y, z)))
+                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(-x, -y, -z), config.getState(level, random, centerPos.offset(-x, -y, -z)))
+                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(-z, -y, x), config.getState(level, random, centerPos.offset(-z, -y, x)))
+                        if (random.nextInt(3) != 0) placerLambda(centerPos.offset(z, -y, -x), config.getState(level, random, centerPos.offset(z, -y, -x)))
                         continue
                     }
 
-                    placerLambda(centerPos.offset(x, y, z), config.getState(random, centerPos.offset(x, y, z)))
-                    placerLambda(centerPos.offset(-x, y, -z), config.getState(random, centerPos.offset(-x, y, -z)))
-                    placerLambda(centerPos.offset(-z, y, x), config.getState(random, centerPos.offset(-z, y, x)))
-                    placerLambda(centerPos.offset(z, y, -x), config.getState(random, centerPos.offset(z, y, -x)))
+                    placerLambda(centerPos.offset(x, y, z), config.getState(level, random, centerPos.offset(x, y, z)))
+                    placerLambda(centerPos.offset(-x, y, -z), config.getState(level, random, centerPos.offset(-x, y, -z)))
+                    placerLambda(centerPos.offset(-z, y, x), config.getState(level, random, centerPos.offset(-z, y, x)))
+                    placerLambda(centerPos.offset(z, y, -x), config.getState(level, random, centerPos.offset(z, y, -x)))
 
-                    placerLambda(centerPos.offset(x, -y, z), config.getState(random, centerPos.offset(x, -y, z)))
-                    placerLambda(centerPos.offset(-x, -y, -z), config.getState(random, centerPos.offset(-x, -y, -z)))
-                    placerLambda(centerPos.offset(-z, -y, x), config.getState(random, centerPos.offset(-z, -y, x)))
-                    placerLambda(centerPos.offset(z, -y, -x), config.getState(random, centerPos.offset(z, -y, -x)))
+                    placerLambda(centerPos.offset(x, -y, z), config.getState(level, random, centerPos.offset(x, -y, z)))
+                    placerLambda(centerPos.offset(-x, -y, -z), config.getState(level, random, centerPos.offset(-x, -y, -z)))
+                    placerLambda(centerPos.offset(-z, -y, x), config.getState(level, random, centerPos.offset(-z, -y, x)))
+                    placerLambda(centerPos.offset(z, -y, -x), config.getState(level, random, centerPos.offset(z, -y, -x)))
                 }
             }
         }
@@ -273,10 +273,10 @@ fun traceExposedRoot(
         if (hasEmptyNeighborExceptBelow(level, exposedPos)) {
             if (anyBelowMatch(exposedPos, rootPlacer.rootPenetrability - 1) { blockPos ->
                     !worldGenReplaceable(level.getBlockState(blockPos)) &&
-                            level.getBlockState(blockPos) != exposedRoot.getState(random, exposedPos)
+                            level.getBlockState(blockPos) != exposedRoot.getState(level, random, exposedPos)
                 }) return
 
-            rootPlacer.placer.accept(exposedPos, exposedRoot.getState(random, exposedPos))
+            rootPlacer.placer.accept(exposedPos, exposedRoot.getState(level, random, exposedPos))
         } else {
             if (placeIfValidRootPos(level, rootPlacer, random, exposedPos, dirtRoot)) {
                 traceRoot(level, rootPlacer, random, dirtRoot, posTracer)
@@ -307,7 +307,7 @@ fun placeIfValidRootPos(
     return if (!anyBelowMatch(pos, rootPlacer.rootPenetrability - 1) { blockPos ->
             !canRootGrowIn(level, blockPos)
         }) {
-        rootPlacer.placer.accept(pos, config.getState(random, pos))
+        rootPlacer.placer.accept(pos, config.getState(level, random, pos))
         true
     } else {
         false

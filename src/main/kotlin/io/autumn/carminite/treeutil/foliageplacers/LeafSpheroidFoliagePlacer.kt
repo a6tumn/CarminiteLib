@@ -12,7 +12,6 @@ import net.minecraft.util.Mth
 import net.minecraft.util.RandomSource
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.util.valueproviders.IntProvider
-import net.minecraft.world.level.LevelSimulatedReader
 import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
@@ -48,7 +47,7 @@ class LeafSpheroidFoliagePlacer(
     override fun type(): FoliagePlacerType<*> = TreeUtilRegistry.LEAF_SPHEROID_FOLIAGE_PLACER
 
     override fun createFoliage(
-        level: LevelSimulatedReader,
+        level: WorldGenLevel,
         foliageSetter: FoliageSetter,
         random: RandomSource,
         config: TreeConfiguration,
@@ -61,7 +60,7 @@ class LeafSpheroidFoliagePlacer(
         val center = foliageAttatchment.pos().above(offset)
 
         placeSpheroid(
-            level as WorldGenLevel,
+            level,
             foliageSetter,
             VALID_TREE_POS,
             random,

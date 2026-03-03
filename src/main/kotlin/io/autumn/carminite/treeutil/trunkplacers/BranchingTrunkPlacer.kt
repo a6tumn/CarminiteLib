@@ -10,7 +10,6 @@ import io.autumn.carminite.treeutil.trunkplacers.config.BranchesConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
-import net.minecraft.world.level.LevelSimulatedReader
 import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
@@ -77,7 +76,7 @@ class BranchingTrunkPlacer(
                 if (level.isStateAtPosition(belowPos, BlockBehaviour.BlockStateBase::canBeReplaced)) {
                     trunkSetter.accept(
                         origin.below(),
-                        config.trunkProvider.getState(random, origin.below())
+                        config.trunkProvider.getState(level, random, origin.below())
                     )
                     break
                 }
@@ -109,7 +108,7 @@ class BranchingTrunkPlacer(
     }
 
     private fun buildBranch(
-        level: LevelSimulatedReader,
+        level: WorldGenLevel,
         worldPlacer: BiConsumer<BlockPos, BlockState>,
         pos: BlockPos,
         leafBlocks: MutableList<FoliagePlacer.FoliageAttachment>,
@@ -143,7 +142,7 @@ class BranchingTrunkPlacer(
     }
 
     private fun drawBresenhamBranch(
-        level: LevelSimulatedReader,
+        level: WorldGenLevel,
         worldPlacer: BiConsumer<BlockPos, BlockState>,
         random: RandomSource,
         from: BlockPos, to: BlockPos
@@ -154,7 +153,7 @@ class BranchingTrunkPlacer(
     }
 
     private fun placeWood(
-        level: LevelSimulatedReader,
+        level: WorldGenLevel,
         blockSetter: BiConsumer<BlockPos, BlockState>,
         random: RandomSource,
         pos: BlockPos
@@ -162,14 +161,14 @@ class BranchingTrunkPlacer(
         placeWood(level, blockSetter, random, pos) { it }
 
     private fun placeWood(
-        level: LevelSimulatedReader,
+        level: WorldGenLevel,
         blockSetter: BiConsumer<BlockPos, BlockState>,
         random: RandomSource,
         pos: BlockPos,
         propertySetter: (BlockState) -> BlockState
     ): Boolean {
         return if (TreeFeature.validTreePos(level, pos)) {
-            blockSetter.accept(pos, propertySetter(branchesConfig.branchProvider.getState(random, pos)))
+            blockSetter.accept(pos, propertySetter(branchesConfig.branchProvider.getState(level, random, pos)))
             true
         } else false
     }
