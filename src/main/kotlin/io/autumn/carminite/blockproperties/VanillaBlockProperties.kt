@@ -214,3 +214,19 @@ fun signProperties(
         .noCollision()
         .strength(1.0f)
         .ignitedByLava()
+
+/**
+ * Creates standard carpet block properties.
+ *
+ * Intended for generic carpet blocks.
+ *
+ * @param mapColor The color shown on maps (defaults to [MapColor.WOOL]).
+ */
+fun carpetProperties(
+    mapColor: MapColor = MapColor.WOOL
+): BlockBehaviour.Properties =
+    BlockBehaviour.Properties.of()
+        .mapColor(mapColor)
+        .strength(0.1F)
+        .sound(SoundType.WOOL)
+        .ignitedByLava()
