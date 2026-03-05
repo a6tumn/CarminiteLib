@@ -26,6 +26,33 @@ import net.minecraft.world.level.block.state.BlockBehaviour
  **/
 
 /**
+ * Registers a generic block.
+ *
+ * Intended for generic blocks.
+ *
+ * @param namespaceAndPath An identifier containing your project namepsace and the name of the block (no default set).
+ * @param blockFactory An instance of the type of block you are creating (no default set).
+ * @param settings The settings which you want your block to be registered with (no default set).
+ * @param shouldRegisterItem A boolean which is used to determine whether or not a BlockItem will be registered with the block (defaults to true)
+ **/
+fun registerGenericBlock(
+    namespaceAndPath: Identifier,
+    blockFactory: (BlockBehaviour.Properties) -> Block,
+    settings: BlockBehaviour.Properties,
+    shouldRegisterItem: Boolean = true
+) : Block {
+    val blockKey = keyOfBlock(namespaceAndPath)
+    val block = blockFactory(settings.setId(blockKey)).also {
+        if (shouldRegisterItem) {
+            val itemKey = keyOfItem(namespaceAndPath)
+            val item = BlockItem(it, Item.Properties().setId(itemKey).useBlockDescriptionPrefix())
+            Registry.register(BuiltInRegistries.ITEM, itemKey, item)
+        }
+    }
+    return Registry.register(BuiltInRegistries.BLOCK, blockKey, block)
+}
+
+/**
  * Registers a standard log pair.
  *
  * Intended for generic log blocks.
@@ -107,25 +134,3 @@ fun registerStair(
             p
         )
     }, BlockBehaviour.Properties.ofFullCopy(base))
-
-/**
- * Registers a generic block.
- *
- * Intended for generic blocks.
- *
- * @param namespaceAndPath An identifier containing your project namepsace and the name of the block (no default set).
- * @param blockFactory An instance of the type of block you are creating (no default set).
- * @param settings The settings which you want your block to be registered with (no default set).
- * @param shouldRegisterItem A boolean which is used to determine whether or not a BlockItem will be registered with the block (defaults to true)
- **/
-fun registerGenericBlock(namespaceAndPath: Identifier, blockFactory: (BlockBehaviour.Properties) -> Block, settings: BlockBehaviour.Properties, shouldRegisterItem: Boolean = true) : Block {
-    val blockKey = keyOfBlock(namespaceAndPath)
-    val block = blockFactory(settings.setId(blockKey)).also {
-        if (shouldRegisterItem) {
-            val itemKey = keyOfItem(namespaceAndPath)
-            val item = BlockItem(it, Item.Properties().setId(itemKey).useBlockDescriptionPrefix())
-            Registry.register(BuiltInRegistries.ITEM, itemKey, item)
-        }
-    }
-    return Registry.register(BuiltInRegistries.BLOCK, blockKey, block)
-}

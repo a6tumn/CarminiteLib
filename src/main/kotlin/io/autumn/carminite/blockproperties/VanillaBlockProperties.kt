@@ -227,6 +227,22 @@ fun carpetProperties(
 ): BlockBehaviour.Properties =
     BlockBehaviour.Properties.of()
         .mapColor(mapColor)
-        .strength(0.1F)
+        .strength(0.1f)
         .sound(SoundType.WOOL)
         .ignitedByLava()
+
+/**
+ * Creates standard chest block properties.
+ *
+ * Intended for generic chest blocks.
+ *
+ * @param woodBlock Block to inherit map color from (defaults to [Blocks.OAK_WOOD]).
+ */
+fun chestProperties(
+    woodBlock: Block = Blocks.OAK_WOOD
+): BlockBehaviour.Properties =
+    BlockBehaviour.Properties.of()
+        .mapColor(woodBlock.defaultMapColor())
+        .instrument(NoteBlockInstrument.BASS)
+        .strength(2.5f)
+        .sound(SoundType.WOOD).ignitedByLava()
