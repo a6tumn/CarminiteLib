@@ -7,6 +7,7 @@ import io.autumn.carminite.registryhelpers.registerGenericTrunkPlacer
 import io.autumn.carminite.treeutil.decorators.TreeRootsDecorator
 import io.autumn.carminite.treeutil.foliageplacers.LeafSpheroidFoliagePlacer
 import io.autumn.carminite.treeutil.trunkplacers.BranchingTrunkPlacer
+import io.autumn.carminite.treeutil.trunkplacers.MegaTrunkPlacer
 import io.autumn.carminite.treeutil.trunkplacers.TrunkRiser
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
@@ -21,6 +22,9 @@ object TreeUtilRegistry {
 
     val BRANCHING_TRUNK_PLACER: TrunkPlacerType<BranchingTrunkPlacer> =
         registerGenericTrunkPlacer("branching_trunk_placer", BranchingTrunkPlacer.CODEC)
+
+    val MEGA_TRUNK_PLACER: TrunkPlacerType<MegaTrunkPlacer> =
+        registerGenericTrunkPlacer("mega_trunk_placer", MegaTrunkPlacer.CODEC)
 
     val TRUNK_RISER: TrunkPlacerType<TrunkRiser> =
         registerGenericTrunkPlacer("trunk_riser", TrunkRiser.CODEC)
