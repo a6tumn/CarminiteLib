@@ -1,6 +1,6 @@
 package io.autumn.carminite
 
-import io.autumn.carminite.treeutil.TreeUtilRegistry
+import io.autumn.carminite.tree.TreeUtilRegistry
 import net.fabricmc.api.ModInitializer
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
