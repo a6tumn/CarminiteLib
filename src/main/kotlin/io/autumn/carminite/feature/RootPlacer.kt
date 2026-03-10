@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package io.autumn.carminite.feature
 
 import net.minecraft.core.BlockPos

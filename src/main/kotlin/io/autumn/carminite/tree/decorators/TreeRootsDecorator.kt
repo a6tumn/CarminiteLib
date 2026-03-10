@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package io.autumn.carminite.tree.decorators
 
 import com.mojang.serialization.Codec

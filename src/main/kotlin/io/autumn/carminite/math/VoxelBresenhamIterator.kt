@@ -6,26 +6,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction.Axis
 import kotlin.math.abs
 
-/**
- * Iterates over all voxel positions (BlockPos) along a 3D line between two points
- * using a 3D Bresenham algorithm.
- *
- * This is useful for raycasting, line-of-sight checks, or generating structures along
- * a straight path in a Minecraft world.
- *
- * @property voxel The starting voxel position.
- * @property xInc Step increment for x-axis (-1 or 1 depending on direction).
- * @property yInc Step increment for y-axis (-1 or 1 depending on direction).
- * @property zInc Step increment for z-axis (-1 or 1 depending on direction).
- * @property doubleAbsDx Double of the absolute difference along x-axis.
- * @property doubleAbsDy Double of the absolute difference along y-axis.
- * @property doubleAbsDz Double of the absolute difference along z-axis.
- * @property length Total number of steps along the dominant axis.
- * @property direction Dominant axis along which the line progresses (X, Y, or Z).
- * @property i Current iteration index.
- * @property err1 Error accumulator for the first secondary axis.
- * @property err2 Error accumulator for the second secondary axis.
- **/
 class VoxelBresenhamIterator(
     voxel: BlockPos,
     x2: Int,

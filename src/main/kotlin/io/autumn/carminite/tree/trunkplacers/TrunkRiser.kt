@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package io.autumn.carminite.tree.trunkplacers
 
 import com.mojang.serialization.Codec

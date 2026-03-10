@@ -11,32 +11,10 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import java.util.function.BiConsumer
 
-/**
- * Collection of helper methods for streamlining feature placer creation.
- *
- * Default parameter values are not provided in most cases as the
- * arguments will need meaningful values for production code.
- **/
-
-/**
- * Predicate to check if a given [BlockPos] in a world is a valid position for tree placement.
- **/
 val VALID_TREE_POS: (WorldGenLevel, BlockPos) -> Boolean = { world, pos ->
     TreeFeature.validTreePos(world, pos)
 }
 
-/**
- * Places a block at a given position in the world if the given [predicate] allows it.
- *
- * Intended to be used on a given block and position within the world.
- *
- * @param level The world in which to place the blocks (no default set).
- * @param worldPlacer The function responsible for actually placing a block at a position (no default set).
- * @param predicate A function that returns `true` if the block can be placed at the position (no default set).
- * @param pos The position to attempt to place the block (no default set).
- * @param config The [BlockStateProvider] providing the block state to place (no default set).
- * @param random Random source for block variation (no default set).
- **/
 fun placeProvidedBlock(
     level: WorldGenLevel,
     worldPlacer: BiConsumer<BlockPos, BlockState>,
@@ -50,18 +28,6 @@ fun placeProvidedBlock(
     }
 }
 
-/**
- * Places a leaf block at a given position if the [predicate] allows it.
- *
- * Intended to be used on a given leaf block and position within the world.
- *
- * @param level The world in which to place the blocks (no default set).
- * @param foliageSetter The foliage setter used to place leaf blocks (no default set).
- * @param predicate A function that returns `true` if the block can be placed at the position (no default set).
- * @param pos The position to attempt to place the block (no default set).
- * @param config The block state provider for the blocks (no default set).
- * @param random Random source for block variation (no default set).
- **/
 fun placeLeaf(
     level: WorldGenLevel,
     foliageSetter: FoliagePlacer.FoliageSetter,
@@ -75,21 +41,6 @@ fun placeLeaf(
     }
 }
 
-/**
- * Places a spheroid of leaf blocks centered at [centerPos] with specified radii and vertical bias.
- *
- * Intended to be used on a given block and position within the world.
- *
- * @param level The world in which to place the blocks (no default set).
- * @param foliageSetter The foliage setter used to place leaf blocks (no default set).
- * @param predicate A function that returns `true` if the block can be placed at the position (no default set).
- * @param random Random source for block variation (no default set).
- * @param centerPos The center position of the spheroid (no default set).
- * @param xzRadius Horizontal radius of the spheroid (no default set).
- * @param yRadius Vertical radius of the spheroid (no default set).
- * @param verticalBias Vertical offset bias applied to shape the spheroid (no default set).
- * @param config The block state provider for the blocks (no default set).
- **/
 fun placeSpheroid(
     level: WorldGenLevel,
     foliageSetter: FoliagePlacer.FoliageSetter,
@@ -142,20 +93,6 @@ fun placeSpheroid(
     }
 }
 
-/**
- * Places a spheroid of blocks using a [BiConsumer] placer instead of a foliage setter.
- *
- * Intended to be used on a given block and position within the world.
- *
- * @param level The world in which to place the blocks (no default set).
- * @param placer A [BiConsumer] responsible for placing blocks at positions (no default set).
- * @param predicate A function that returns `true` if the block can be placed at the position (no default set).
- * @param random Random source for block variation (no default set).
- * @param centerPos The center position of the spheroid (no default set).
- * @param xzRadius Horizontal radius of the spheroid (no default set).
- * @param yRadius Vertical radius of the spheroid (no default set).
- * @param config The block state provider for the blocks (no default set).
- */
 fun placeSpheroid(
     level: WorldGenLevel,
     placer: BiConsumer<BlockPos, BlockState>,
@@ -220,17 +157,6 @@ fun placeSpheroid(
     }
 }
 
-/**
- * Traces and places root blocks along a given position path.
- *
- * Intended to be used on a given block and position within the world.
- *
- * @param level The world in which to place the blocks (no default set).
- * @param rootPlacer The [RootPlacer] responsible for placing root blocks (no default set).
- * @param random Random source for block variation (no default set).
- * @param dirtRoot The block state provider for the root blocks (no default set).
- * @param posTracer Iterable of positions used to trace root placement (no default set).
- **/
 fun traceRoot(
     level: WorldGenLevel,
     rootPlacer: RootPlacer,
@@ -247,18 +173,6 @@ fun traceRoot(
     }
 }
 
-/**
- * Traces and places exposed root blocks along a given position path.
- *
- * Intended to be used on a given block and position within the world.
- *
- * @param level The world in which to place the blocks (no default set).
- * @param rootPlacer The [RootPlacer] responsible for placing root blocks (no default set).
- * @param random Random source for block variation (no default set).
- * @param exposedRoot The block state provider for the exposed root blocks (no default set).
- * @param dirtRoot The block state provider for the root blocks (no default set).
- * @param posTracer Iterable of positions used to trace root placement (no default set).
- **/
 fun traceExposedRoot(
     level: WorldGenLevel,
     rootPlacer: RootPlacer,
@@ -286,17 +200,6 @@ fun traceExposedRoot(
     }
 }
 
-/**
- * Places a root block at a given position in the world if the position is valid.
- *
- * Intended to be used on a given block and position within the world.
- *
- * @param level The world in which to place the blocks (no default set).
- * @param rootPlacer The [RootPlacer] responsible for placing root blocks (no default set).
- * @param random Random source for block variation (no default set).
- * @param pos The position to attempt to place the block (no default set).
- * @param config The [BlockStateProvider] providing the block state to place (no default set).
- **/
 fun placeIfValidRootPos(
     level: WorldGenLevel,
     rootPlacer: RootPlacer,
