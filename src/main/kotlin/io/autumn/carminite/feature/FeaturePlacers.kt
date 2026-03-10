@@ -2,17 +2,18 @@
 
 package io.autumn.carminite.feature
 
+import io.autumn.carminite.tree.config.CarminiteTreeFeatureConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.levelgen.feature.TreeFeature
+import net.minecraft.world.level.levelgen.feature.TreeFeature.validTreePos
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import java.util.function.BiConsumer
 
 val VALID_TREE_POS: (WorldGenLevel, BlockPos) -> Boolean = { world, pos ->
-    TreeFeature.validTreePos(world, pos)
+    validTreePos(world, pos)
 }
 
 fun placeProvidedBlock(
@@ -200,6 +201,21 @@ fun traceExposedRoot(
     }
 }
 
+fun placeIfValidTreePos(
+    level: WorldGenLevel,
+    placer: BiConsumer<BlockPos, BlockState>,
+    random: RandomSource,
+    pos: BlockPos,
+    config: BlockStateProvider
+): Boolean {
+    return if (validTreePos(level, pos)) {
+        placer.accept(pos, config.getState(level, random, pos))
+        true
+    } else {
+        false
+    }
+}
+
 fun placeIfValidRootPos(
     level: WorldGenLevel,
     rootPlacer: RootPlacer,
@@ -214,5 +230,36 @@ fun placeIfValidRootPos(
         true
     } else {
         false
+    }
+}
+
+fun putBranchWithLeaves(
+    world: WorldGenLevel,
+    trunkPlacer: BiConsumer<BlockPos, BlockState>,
+    leavesPlacer: BiConsumer<BlockPos, BlockState>,
+    rand: RandomSource,
+    pos: BlockPos,
+    bushy: Boolean,
+    config: CarminiteTreeFeatureConfig
+) {
+    placeIfValidTreePos(world, trunkPlacer, rand, pos, config.branchProvider)
+
+    for (lx in -1..1) {
+        for (ly in -1..1) {
+            for (lz in -1..1) {
+                if (!bushy && kotlin.math.abs(ly) > 0 && kotlin.math.abs(lx) > 0) {
+                    continue
+                }
+
+                placeProvidedBlock(
+                    world,
+                    leavesPlacer,
+                    VALID_TREE_POS,
+                    pos.offset(lx, ly, lz),
+                    config.leavesProvider,
+                    rand
+                )
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.autumn.carminite.feature.translate
 import io.autumn.carminite.math.VoxelBresenhamIterator
 import io.autumn.carminite.tree.TreeUtilRegistry
-import io.autumn.carminite.tree.trunkplacers.config.BranchesConfig
+import io.autumn.carminite.tree.config.CarminiteBranchesConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.RandomSource
@@ -27,7 +27,7 @@ class BranchingTrunkPlacer(
     randomHeightA: Int,
     randomHeightB: Int,
     val branchDownwardOffset: Int,
-    val branchesConfig: BranchesConfig,
+    val carminiteBranchesConfig: CarminiteBranchesConfig,
     val perpendicularBranches: Boolean,
     val preventExposedRoot: Boolean
 ) : TrunkPlacer(
@@ -43,9 +43,9 @@ class BranchingTrunkPlacer(
                     Codec.intRange(0, 24)
                         .fieldOf("branch_start_offset_down")
                         .forGetter { it.branchDownwardOffset },
-                    BranchesConfig.CODEC
+                    CarminiteBranchesConfig.CODEC
                         .fieldOf("branch_config")
-                        .forGetter { it.branchesConfig },
+                        .forGetter { it.carminiteBranchesConfig },
                     Codec.BOOL
                         .fieldOf("perpendicular_branches")
                         .forGetter { it.perpendicularBranches },
@@ -69,7 +69,7 @@ class BranchingTrunkPlacer(
     ): List<FoliagePlacer.FoliageAttachment> {
         val leafAttachments = mutableListOf<FoliagePlacer.FoliageAttachment>()
         var adjustedHeight = treeHeight
-        val numBranches = branchesConfig.branchCount + random.nextInt(branchesConfig.randomAddBranches + 1)
+        val numBranches = carminiteBranchesConfig.branchCount + random.nextInt(carminiteBranchesConfig.randomAddBranches + 1)
         val offset = random.nextFloat()
 
         if (preventExposedRoot) {
@@ -98,9 +98,9 @@ class BranchingTrunkPlacer(
             buildBranch(
                 level, trunkSetter, origin, leafAttachments,
                 adjustedHeight - branchDownwardOffset + b,
-                branchesConfig.length,
-                branchesConfig.spacingYaw * b + offset,
-                branchesConfig.downwardsPitch,
+                carminiteBranchesConfig.length,
+                carminiteBranchesConfig.spacingYaw * b + offset,
+                carminiteBranchesConfig.downwardsPitch,
                 random,
                 perpendicularBranches
             )
@@ -170,7 +170,7 @@ class BranchingTrunkPlacer(
         propertySetter: (BlockState) -> BlockState
     ): Boolean {
         return if (TreeFeature.validTreePos(level, pos)) {
-            blockSetter.accept(pos, propertySetter(branchesConfig.branchProvider.getState(level, random, pos)))
+            blockSetter.accept(pos, propertySetter(carminiteBranchesConfig.branchProvider.getState(level, random, pos)))
             true
         } else false
     }

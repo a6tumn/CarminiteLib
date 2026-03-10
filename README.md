@@ -23,10 +23,6 @@ See the `LICENSE` file for full details.
 
 - *Minecraft* : `26.1-snapshot-11`
 - *Library* : `3.0.0`
-####
-- Major versions such as 1.X.X will include breaking changes
-- Intermediate versions such as X.1.X will include new features
-- Minor versions such as X.X.1 will include small changes or bug fixes
 
 ---
 
