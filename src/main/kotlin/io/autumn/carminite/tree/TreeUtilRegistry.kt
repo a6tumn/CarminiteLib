@@ -6,11 +6,11 @@ import io.autumn.carminite.Carminite
 import io.autumn.carminite.registry.registerGenericFoliagePlacer
 import io.autumn.carminite.registry.registerGenericTreeDecorator
 import io.autumn.carminite.registry.registerGenericTrunkPlacer
-import io.autumn.carminite.tree.decorators.TreeRootsDecorator
-import io.autumn.carminite.tree.foliageplacers.LeafSpheroidFoliagePlacer
-import io.autumn.carminite.tree.trunkplacers.BranchingTrunkPlacer
-import io.autumn.carminite.tree.trunkplacers.MegaTrunkPlacer
-import io.autumn.carminite.tree.trunkplacers.TrunkRiser
+import io.autumn.carminite.tree.decorator.BlockInsertionDecorator
+import io.autumn.carminite.tree.decorator.TreeRootsDecorator
+import io.autumn.carminite.tree.foliageplacer.LeafSpheroidFoliagePlacer
+import io.autumn.carminite.tree.trunkplacer.BranchingTrunkPlacer
+import io.autumn.carminite.tree.trunkplacer.TrunkRiser
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
@@ -22,11 +22,11 @@ object TreeUtilRegistry {
     val TREE_ROOTS_DECORATOR: TreeDecoratorType<TreeRootsDecorator> =
         registerGenericTreeDecorator("tree_roots_decorator", TreeRootsDecorator.CODEC)
 
+    val BLOCK_INSERTION_DECORATOR: TreeDecoratorType<BlockInsertionDecorator> =
+        registerGenericTreeDecorator("block_insertion_decorator", BlockInsertionDecorator.CODEC)
+
     val BRANCHING_TRUNK_PLACER: TrunkPlacerType<BranchingTrunkPlacer> =
         registerGenericTrunkPlacer("branching_trunk_placer", BranchingTrunkPlacer.CODEC)
-
-    val MEGA_TRUNK_PLACER: TrunkPlacerType<MegaTrunkPlacer> =
-        registerGenericTrunkPlacer("mega_trunk_placer", MegaTrunkPlacer.CODEC)
 
     val TRUNK_RISER: TrunkPlacerType<TrunkRiser> =
         registerGenericTrunkPlacer("trunk_riser", TrunkRiser.CODEC)

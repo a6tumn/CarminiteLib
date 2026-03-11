@@ -1,13 +1,13 @@
 @file:Suppress("unused")
 
-package io.autumn.carminite.tree.decorators
+package io.autumn.carminite.tree.decorator
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.autumn.carminite.feature.RootPlacer
-import io.autumn.carminite.feature.traceExposedRoot
-import io.autumn.carminite.feature.traceRoot
+import io.autumn.carminite.feature.placeExposedRoot
+import io.autumn.carminite.feature.placeRoot
 import io.autumn.carminite.feature.translate
 import io.autumn.carminite.math.VoxelBresenhamIterator
 import io.autumn.carminite.tree.TreeUtilRegistry
@@ -93,9 +93,7 @@ class TreeRootsDecorator private constructor(
         true
     )
 
-    override fun type(): TreeDecoratorType<TreeRootsDecorator> {
-        return TreeUtilRegistry.TREE_ROOTS_DECORATOR
-    }
+    override fun type(): TreeDecoratorType<TreeRootsDecorator> = TreeUtilRegistry.TREE_ROOTS_DECORATOR
 
     override fun place(
         context: Context
@@ -109,7 +107,7 @@ class TreeRootsDecorator private constructor(
         if (hasSurfaceRoots) {
             repeat(numBranches) { i ->
                 val dest = translate(startPos.below(i + 2), length.toDouble(), 0.3 * i + offset, 0.8)
-                traceExposedRoot(
+                placeExposedRoot(
                     context.level(),
                     RootPlacer(BiConsumer(context::setBlock), rootPenetrability),
                     context.random(),
@@ -121,7 +119,7 @@ class TreeRootsDecorator private constructor(
         } else {
             repeat(numBranches) { i ->
                 val dest = translate(startPos.below(i + 2), length.toDouble(), 0.3 * i + offset, 0.8)
-                traceRoot(
+                placeRoot(
                     context.level(),
                     RootPlacer(BiConsumer(context::setBlock), rootPenetrability),
                     context.random(),

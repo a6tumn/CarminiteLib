@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package io.autumn.carminite.tree.foliageplacers
+package io.autumn.carminite.tree.foliageplacer
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec

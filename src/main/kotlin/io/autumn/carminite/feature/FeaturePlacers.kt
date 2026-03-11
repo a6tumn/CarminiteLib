@@ -2,6 +2,7 @@
 
 package io.autumn.carminite.feature
 
+import io.autumn.carminite.math.VoxelBresenhamIterator
 import io.autumn.carminite.tree.config.CarminiteTreeFeatureConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.util.RandomSource
@@ -158,7 +159,7 @@ fun placeSpheroid(
     }
 }
 
-fun traceRoot(
+fun placeRoot(
     level: WorldGenLevel,
     rootPlacer: RootPlacer,
     random: RandomSource,
@@ -174,7 +175,28 @@ fun traceRoot(
     }
 }
 
-fun traceExposedRoot(
+fun placeNonExposedRoot(
+    world: WorldGenLevel,
+    placer: RootPlacer,
+    rand: RandomSource,
+    start: BlockPos,
+    offset: Double,
+    b: Int,
+    config: BlockStateProvider
+) {
+    val dest = translate(
+        start.below(b + 2),
+        5.toDouble(),
+        0.3 * b + offset,
+        0.8
+    )
+
+    for (coord in VoxelBresenhamIterator(start.below(), dest)) {
+        if (!placeIfValidRootPos(world, placer, rand, coord, config)) return
+    }
+}
+
+fun placeExposedRoot(
     level: WorldGenLevel,
     rootPlacer: RootPlacer,
     random: RandomSource,
@@ -194,7 +216,7 @@ fun traceExposedRoot(
             rootPlacer.placer.accept(exposedPos, exposedRoot.getState(level, random, exposedPos))
         } else {
             if (placeIfValidRootPos(level, rootPlacer, random, exposedPos, dirtRoot)) {
-                traceRoot(level, rootPlacer, random, dirtRoot, posTracer)
+                placeRoot(level, rootPlacer, random, dirtRoot, posTracer)
             }
             return
         }
@@ -233,7 +255,7 @@ fun placeIfValidRootPos(
     }
 }
 
-fun putBranchWithLeaves(
+fun placeBranchWithLeaves(
     world: WorldGenLevel,
     trunkPlacer: BiConsumer<BlockPos, BlockState>,
     leavesPlacer: BiConsumer<BlockPos, BlockState>,
@@ -261,5 +283,18 @@ fun putBranchWithLeaves(
                 )
             }
         }
+    }
+}
+
+fun placeBresenhamBranch(
+    world: WorldGenLevel,
+    trunkPlacer: BiConsumer<BlockPos, BlockState>,
+    random: RandomSource,
+    start: BlockPos,
+    end: BlockPos,
+    config: BlockStateProvider
+) {
+    for (pixel in VoxelBresenhamIterator(start, end)) {
+        placeIfValidTreePos(world, trunkPlacer, random, pixel, config)
     }
 }

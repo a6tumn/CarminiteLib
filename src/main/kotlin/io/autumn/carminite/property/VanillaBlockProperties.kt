@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package io.autumn.carminite.properties
+package io.autumn.carminite.property
 
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks

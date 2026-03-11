@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package io.autumn.carminite.tree.trunkplacers
+package io.autumn.carminite.tree.trunkplacer
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
@@ -22,7 +22,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType
 import java.util.function.BiConsumer
 
-class MegaTrunkPlacer(
+class BranchingTrunkPlacer(
     baseHeight: Int,
     randomHeightA: Int,
     randomHeightB: Int,
@@ -30,9 +30,14 @@ class MegaTrunkPlacer(
     val carminiteBranchesConfig: CarminiteBranchesConfig,
     val perpendicularBranches: Boolean,
     val preventExposedRoot: Boolean
-) : TrunkPlacer(baseHeight, randomHeightA, randomHeightB) {
+) : TrunkPlacer(
+    baseHeight,
+    randomHeightA,
+    randomHeightB
+) {
+
     companion object {
-        val CODEC: MapCodec<MegaTrunkPlacer> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<BranchingTrunkPlacer> = RecordCodecBuilder.mapCodec { instance ->
             trunkPlacerParts(instance).and(
                 instance.group(
                     Codec.intRange(0, 24)
@@ -48,11 +53,11 @@ class MegaTrunkPlacer(
                         .fieldOf("prevent_exposed_root")
                         .forGetter { it.preventExposedRoot }
                 )
-            ).apply(instance, ::MegaTrunkPlacer)
+            ).apply(instance, ::BranchingTrunkPlacer)
         }
     }
 
-    override fun type(): TrunkPlacerType<*> = TreeUtilRegistry.MEGA_TRUNK_PLACER
+    override fun type(): TrunkPlacerType<*> = TreeUtilRegistry.BRANCHING_TRUNK_PLACER
 
     override fun placeTrunk(
         level: WorldGenLevel,
@@ -71,33 +76,17 @@ class MegaTrunkPlacer(
             for (direction in Direction.Plane.HORIZONTAL) {
                 val belowPos = origin.below().relative(direction)
                 if (level.isStateAtPosition(belowPos, BlockBehaviour.BlockStateBase::canBeReplaced)) {
-                    for (x in -1..1) {
-                        for (z in -1..1) {
-                            val root = origin.below().offset(x, 0, z)
-                            trunkSetter.accept(
-                                root,
-                                config.trunkProvider.getState(level, random, root)
-                            )
-                        }
-                    }
+                    trunkSetter.accept(
+                        origin.below(),
+                        config.trunkProvider.getState(level, random, origin.below())
+                    )
                     break
                 }
             }
         }
 
         for (y in 0..treeHeight) {
-            var placedAny = false
-
-            for (x in -1..1) {
-                for (z in -1..1) {
-                    val pos = origin.offset(x, y, z)
-                    if (placeLog(level, trunkSetter, random, pos, config)) {
-                        placedAny = true
-                    }
-                }
-            }
-
-            if (!placedAny) {
+            if (!placeLog(level, trunkSetter, random, origin.above(y), config)) {
                 adjustedHeight = y
                 break
             }

@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package io.autumn.carminite.tree.trunkplacers
+package io.autumn.carminite.tree.trunkplacer
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec

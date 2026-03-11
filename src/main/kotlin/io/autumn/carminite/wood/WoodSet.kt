@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.grower.TreeGrower
 import net.minecraft.world.level.block.state.properties.BlockSetType
 import net.minecraft.world.level.block.state.properties.WoodType
 import net.minecraft.world.level.material.MapColor
-import io.autumn.carminite.properties.*
+import io.autumn.carminite.property.*
 import io.autumn.carminite.registry.registerGenericBlock
 import io.autumn.carminite.registry.registerStair
 import net.fabricmc.fabric.api.`object`.builder.v1.block.type.BlockSetTypeBuilder
