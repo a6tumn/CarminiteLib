@@ -22,7 +22,7 @@ See the `LICENSE` file for full details.
 ## Current Version
 
 - *Minecraft* : `26.1-snapshot-11`
-- *Library* : `3.2.0`
+- *Library* : `3.3.0`
 
 ---
 

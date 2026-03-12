@@ -8,6 +8,7 @@ import io.autumn.carminite.registry.registerGenericTreeDecorator
 import io.autumn.carminite.registry.registerGenericTrunkPlacer
 import io.autumn.carminite.tree.decorator.BlockInsertionDecorator
 import io.autumn.carminite.tree.decorator.TreeRootsDecorator
+import io.autumn.carminite.tree.decorator.TrunkSideDecorator
 import io.autumn.carminite.tree.foliageplacer.LeafSpheroidFoliagePlacer
 import io.autumn.carminite.tree.trunkplacer.BranchingTrunkPlacer
 import io.autumn.carminite.tree.trunkplacer.TrunkRiser
@@ -24,6 +25,9 @@ object TreeUtilRegistry {
 
     val BLOCK_INSERTION_DECORATOR: TreeDecoratorType<BlockInsertionDecorator> =
         registerGenericTreeDecorator("block_insertion_decorator", BlockInsertionDecorator.CODEC)
+
+    val TRUNK_SIDE_DECORATOR: TreeDecoratorType<TrunkSideDecorator> =
+        registerGenericTreeDecorator("trunk_side_decorator", TrunkSideDecorator.CODEC)
 
     val BRANCHING_TRUNK_PLACER: TrunkPlacerType<BranchingTrunkPlacer> =
         registerGenericTrunkPlacer("branching_trunk_placer", BranchingTrunkPlacer.CODEC)
