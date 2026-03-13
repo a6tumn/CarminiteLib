@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.util.Mth
 import net.minecraft.util.RandomSource
 import net.minecraft.util.valueproviders.ConstantInt
-import net.minecraft.util.valueproviders.IntProvider
+import net.minecraft.util.valueproviders.UniformInt
 import net.minecraft.world.level.WorldGenLevel
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer
@@ -23,7 +23,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 class LeafSpheroidFoliagePlacer(
     val horizontalRadius: Float,
     val verticalRadius: Float,
-    val yOffset: IntProvider,
+    val yOffset: UniformInt,
     val randomHorizontal: Int,
     val randomVertical: Int,
     val verticalBias: Float,
@@ -35,7 +35,7 @@ class LeafSpheroidFoliagePlacer(
             instance.group(
                 Codec.floatRange(0f, 16f).fieldOf("horizontal_radius").forGetter { it.horizontalRadius },
                 Codec.floatRange(0f, 16f).fieldOf("vertical_radius").forGetter { it.verticalRadius },
-                IntProvider.codec(0, 8).fieldOf("offset").forGetter { it.yOffset },
+                UniformInt.of(0, 8).codec().fieldOf("offset").forGetter { it.yOffset },
                 Codec.intRange(0, 16).fieldOf("random_add_horizontal").orElse(0).forGetter { it.randomHorizontal },
                 Codec.intRange(0, 16).fieldOf("random_add_vertical").orElse(0).forGetter { it.randomVertical },
                 Codec.floatRange(-0.5f, 0.5f).fieldOf("vertical_filler_bias").orElse(0f).forGetter { it.verticalBias },
@@ -43,7 +43,7 @@ class LeafSpheroidFoliagePlacer(
             ).apply(instance, ::LeafSpheroidFoliagePlacer)
         }
 
-        val NO_OP = LeafSpheroidFoliagePlacer(0f, 0f, ConstantInt.of(0), 0, 0, 0f, 0)
+        val NO_OP = LeafSpheroidFoliagePlacer(0f, 0f, UniformInt.of(0, 0), 0, 0, 0f, 0)
     }
 
     override fun type(): FoliagePlacerType<*> = TreeUtilRegistry.LEAF_SPHEROID_FOLIAGE_PLACER
