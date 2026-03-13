@@ -48,8 +48,6 @@ data class WoodSet(
     val topMapColor: MapColor,
     val sideMapColor: MapColor
 ) {
-    val woodName = namespaceAndPath.path
-
     val blockSetType = createBlockSetType(copyBlockSetType)
     val woodType = createWoodType(copyWoodType)
 
@@ -181,6 +179,9 @@ data class WoodSet(
 
     val blockFamily = createBlockFamily()
 
+    val woodId = namespaceAndPath.path
+    val woodName = namespaceAndPath.path.toLangCase()
+
     init {
         registerStrippables(log, strippedLog)
         registerStrippables(wood, strippedWood)
@@ -226,7 +227,7 @@ data class WoodSet(
         return WoodTypeBuilder.copyOf(copyType).register(namespaceAndPath, blockSetType)
     }
 
-    fun createBlockFamily(): BlockFamily {
+    private fun createBlockFamily(): BlockFamily {
         return BlockFamily.Builder(planks)
             .door(door)
             .trapdoor(trapdoor)
@@ -241,4 +242,6 @@ data class WoodSet(
             .recipeUnlockedBy("has_planks")
             .family
     }
+
+    private fun String.toLangCase(): String = this.split("_").joinToString(" ") { word -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() } }
 }
