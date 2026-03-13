@@ -21,8 +21,8 @@ See the `LICENSE` file for full details.
 
 ## Current Version
 
-- *Minecraft* : `26.1-pre-1`
-- *Library* : `4.0.0`
+- *Minecraft* : `26.1-pre-2`
+- *Library* : `4.1.0`
 
 ---
 
