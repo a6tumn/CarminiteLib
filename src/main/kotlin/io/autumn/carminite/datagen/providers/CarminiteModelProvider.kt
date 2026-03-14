@@ -14,13 +14,17 @@ abstract class CarminiteModelProvider(output: FabricPackOutput) : FabricModelPro
     abstract fun generateCarminiteBlockStateModels(blockModelGenerators: CarminiteBlockModelGenerators)
     abstract fun generateCarminiteItemModels(itemModelGenerators: CarminiteItemModelGenerators)
 
-    final override fun generateBlockStateModels(blockModelGenerators: BlockModelGenerators) {
+    final override fun generateBlockStateModels(
+        blockModelGenerators: BlockModelGenerators
+    ) {
         generateCarminiteBlockStateModels(
             CarminiteBlockModelGenerators(blockModelGenerators.blockStateOutput, blockModelGenerators.itemModelOutput, blockModelGenerators.modelOutput)
         )
     }
 
-    final override fun generateItemModels(itemModelGenerators: ItemModelGenerators) {
+    final override fun generateItemModels(
+        itemModelGenerators: ItemModelGenerators
+    ) {
         generateCarminiteItemModels(
             CarminiteItemModelGenerators(itemModelGenerators.itemModelOutput, itemModelGenerators.modelOutput)
         )

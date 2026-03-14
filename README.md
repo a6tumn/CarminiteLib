@@ -22,7 +22,7 @@ See the `LICENSE` file for full details.
 ## Current Version
 
 - *Minecraft* : `26.1-pre-2`
-- *Library* : `4.3.0`
+- *Library* : `4.4.0`
 
 ---
 
