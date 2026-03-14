@@ -20,6 +20,12 @@
         "value": "io.autumn.carminite.Carminite",
         "adapter": "kotlin"
       }
+    ],
+    "client": [
+      {
+        "value": "io.autumn.carminite.CarminiteClient",
+        "adapter": "kotlin"
+      }
     ]
   },
   "depends": {
