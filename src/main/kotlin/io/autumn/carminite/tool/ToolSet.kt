@@ -31,52 +31,41 @@ data class ToolSet(
     val speed: Float,
     val attackDamageBonus: Float,
     val enchantmentValue: Int,
-    val damageOffsetFromIron: Float,
-    val speedOffsetFromIron: Float,
-    val enabledTools: Set<ToolType> = ToolType.entries.toSet()
+    val enabledTools: Set<ToolType> = ToolType.entries.toSet(),
+    val speedPerTool: Map<ToolType, Float>,
+    val damagePerTool: Map<ToolType, Float>
 ) {
-    private val swordDamage = 3.0f + damageOffsetFromIron
-    private val shovelDamage = 1.5f + damageOffsetFromIron
-    private val pickaxeDamage = 1.0f + damageOffsetFromIron
-    private val axeDamage = 6.0f + damageOffsetFromIron
-    private val hoeDamage = -2.0f + damageOffsetFromIron
+    init {
+        require(speedPerTool.keys.containsAll(enabledTools)) {
+            "Speed must be provided for all enabled tools: missing ${enabledTools - speedPerTool.keys}"
+        }
+        require(damagePerTool.keys.containsAll(enabledTools)) {
+            "Damage must be provided for all enabled tools: missing ${enabledTools - damagePerTool.keys}"
+        }
+    }
 
-    private val swordSpeed = -2.4f + speedOffsetFromIron
-    private val shovelSpeed = -3.0f + speedOffsetFromIron
-    private val pickaxeSpeed = -2.8f + speedOffsetFromIron
-    private val axeSpeed = -3.1f + speedOffsetFromIron
-    private val hoeSpeed = -1.0f + speedOffsetFromIron
-
+    val setId: String = nameSpaceAndPath.path
+    val setName: String = setId.toLangCase()
     val toolMaterial = ToolMaterial(incorrectForTag, durability, speed, attackDamageBonus, enchantmentValue, repairWithTag)
 
-    val sword = registerIfEnabled(ToolType.SWORD) {
-        Item.Properties().sword(toolMaterial, swordDamage, swordSpeed)
-    }
-    val shovel = registerIfEnabled(ToolType.SHOVEL) {
-        Item.Properties().shovel(toolMaterial, shovelDamage, shovelSpeed)
-    }
-    val pickaxe = registerIfEnabled(ToolType.PICKAXE) {
-        Item.Properties().pickaxe(toolMaterial, pickaxeDamage, pickaxeSpeed)
-    }
-    val axe = registerIfEnabled(ToolType.AXE) {
-        Item.Properties().axe(toolMaterial, axeDamage, axeSpeed)
-    }
-    val hoe = registerIfEnabled(ToolType.HOE) {
-        Item.Properties().hoe(toolMaterial, hoeDamage, hoeSpeed)
+    val tools: Map<ToolType, Item> = enabledTools.associateWith { type ->
+        val id = nameSpaceAndPath.withSuffix(type.idSuffix)
+        val properties = when (type) {
+            ToolType.SWORD -> Item.Properties().sword(toolMaterial, damagePerTool[type]!!, speedPerTool[type]!!)
+            ToolType.SHOVEL -> Item.Properties().shovel(toolMaterial, damagePerTool[type]!!, speedPerTool[type]!!)
+            ToolType.PICKAXE -> Item.Properties().pickaxe(toolMaterial, damagePerTool[type]!!, speedPerTool[type]!!)
+            ToolType.AXE -> Item.Properties().axe(toolMaterial, damagePerTool[type]!!, speedPerTool[type]!!)
+            ToolType.HOE -> Item.Properties().hoe(toolMaterial, damagePerTool[type]!!, speedPerTool[type]!!)
+        }
+        registerGenericItem(id, ::Item, properties)
     }
 
-    val setId = nameSpaceAndPath.path
-    val setName = nameSpaceAndPath.path.toLangCase()
+    val mapOfToolsToTypes: Map<ToolType, Item?> = ToolType.entries.associateWith { type ->
+        tools[type]
+    }
 
-    val listOfTools = listOfNotNull(sword, shovel, pickaxe, axe, hoe)
+    val listOfTools = tools.values.toList()
 
-    val mapOfToolsToTypes: Map<ToolType, Item?> = mapOf(
-        ToolType.SWORD to sword,
-        ToolType.SHOVEL to shovel,
-        ToolType.PICKAXE to pickaxe,
-        ToolType.AXE to axe,
-        ToolType.HOE to hoe
-    )
     val mapOfTypesToItemTags: Map<ToolType, TagKey<Item>> = mapOf(
         ToolType.SWORD to ItemTags.SWORDS,
         ToolType.SHOVEL to ItemTags.SHOVELS,
@@ -85,16 +74,6 @@ data class ToolSet(
         ToolType.HOE to ItemTags.HOES
     )
 
-    private fun registerIfEnabled(
-        type: ToolType,
-        settings: () -> Item.Properties
-    ): Item? {
-        return if (type !in enabledTools) null else {
-            val id = nameSpaceAndPath.withSuffix(type.idSuffix)
-            registerGenericItem(id, ::Item, settings())
-        }
-    }
-
     private fun <T : Item> registerGenericItem(
         namespaceAndPath: Identifier,
         itemFactory: (Item.Properties) -> T,
@@ -102,11 +81,11 @@ data class ToolSet(
     ): T {
         val itemKey = keyOfItem(namespaceAndPath)
         val item = itemFactory(settings.setId(itemKey))
-
         Registry.register(BuiltInRegistries.ITEM, itemKey, item)
-
         return item
     }
 
-    private fun String.toLangCase(): String = this.split("_").joinToString(" ") { word -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() } }
+    private fun String.toLangCase(): String = this.split("_").joinToString(" ") { word ->
+        word.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+    }
 }
