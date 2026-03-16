@@ -14,14 +14,6 @@
   "license": ["GPL-3.0-only"],
   "icon": "icon.png",
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      {
-        "value": "io.autumn.carminite.Carminite",
-        "adapter": "kotlin"
-      }
-    ]
-  },
   "depends": {
     "fabricloader": ">=0.18.4",
     "minecraft": "~26.1-",
