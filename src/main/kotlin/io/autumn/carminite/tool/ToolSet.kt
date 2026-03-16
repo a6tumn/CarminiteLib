@@ -10,43 +10,16 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ToolMaterial
-import net.minecraft.world.level.block.Block
-
-enum class ToolType(
-    val idSuffix: String,
-    val langSuffix: String
-) {
-    SWORD("_sword", "Sword"),
-    SHOVEL("_shovel", "Shovel"),
-    PICKAXE("_pickaxe", "Pickaxe"),
-    AXE("_axe", "Axe"),
-    HOE("_hoe", "Hoe"),
-}
 
 data class ToolSet(
     val nameSpaceAndPath: Identifier,
-    val incorrectForTag: TagKey<Block>,
-    val repairWithTag: TagKey<Item>,
-    val durability: Int,
-    val speed: Float,
-    val attackDamageBonus: Float,
-    val enchantmentValue: Int,
+    val toolMaterial: ToolMaterial,
     val enabledTools: Set<ToolType> = ToolType.entries.toSet(),
     val speedPerTool: Map<ToolType, Float>,
     val damagePerTool: Map<ToolType, Float>
 ) {
-    init {
-        require(speedPerTool.keys.containsAll(enabledTools)) {
-            "Speed must be provided for all enabled tools: missing ${enabledTools - speedPerTool.keys}"
-        }
-        require(damagePerTool.keys.containsAll(enabledTools)) {
-            "Damage must be provided for all enabled tools: missing ${enabledTools - damagePerTool.keys}"
-        }
-    }
-
     val setId: String = nameSpaceAndPath.path
     val setName: String = setId.toLangCase()
-    val toolMaterial = ToolMaterial(incorrectForTag, durability, speed, attackDamageBonus, enchantmentValue, repairWithTag)
 
     val tools: Map<ToolType, Item> = enabledTools.associateWith { type ->
         val id = nameSpaceAndPath.withSuffix(type.idSuffix)
@@ -60,11 +33,11 @@ data class ToolSet(
         registerGenericItem(id, ::Item, properties)
     }
 
+    val listOfTools = tools.values.toList()
+
     val mapOfToolsToTypes: Map<ToolType, Item?> = ToolType.entries.associateWith { type ->
         tools[type]
     }
-
-    val listOfTools = tools.values.toList()
 
     val mapOfTypesToItemTags: Map<ToolType, TagKey<Item>> = mapOf(
         ToolType.SWORD to ItemTags.SWORDS,
@@ -73,6 +46,15 @@ data class ToolSet(
         ToolType.AXE to ItemTags.AXES,
         ToolType.HOE to ItemTags.HOES
     )
+
+    init {
+        require(speedPerTool.keys.containsAll(enabledTools)) {
+            "Speed must be provided for all enabled tools: missing ${enabledTools - speedPerTool.keys}"
+        }
+        require(damagePerTool.keys.containsAll(enabledTools)) {
+            "Damage must be provided for all enabled tools: missing ${enabledTools - damagePerTool.keys}"
+        }
+    }
 
     private fun <T : Item> registerGenericItem(
         namespaceAndPath: Identifier,

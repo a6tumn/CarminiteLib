@@ -1,7 +1,7 @@
 [versions]
 minecraft = "26.1-pre-2"
 loader = "0.18.4"
-fabric-api = "0.143.13+26.1"
+fabric-api = "0.143.14+26.1"
 fabric-kotlin = "1.13.9+kotlin.2.3.10"
 
 [libraries]

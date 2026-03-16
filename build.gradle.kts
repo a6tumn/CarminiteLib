@@ -23,7 +23,7 @@ dependencies {
 
 fabricApi {
     configureDataGeneration {
-        client = true
+        client = false
     }
 }
 
